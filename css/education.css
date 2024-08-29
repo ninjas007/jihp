@@ -1,0 +1,35 @@
+.body-wrap {
+    height: initial;
+}
+
+.body-content {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: opacity 2s ease-in-out;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.hidden {
+    opacity: 0;
+    z-index: -1;
+}
+
+.visible {
+    opacity: 1;
+    z-index: 1;
+}
