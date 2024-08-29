@@ -87,8 +87,13 @@
             }
 
             $('#reset').click(function () {
+
                 localStorage.removeItem('dataDiri');
-                window.location.href = 'biodata.html';
+                localStorage.removeItem('screening');
+                localStorage.removeItem('dataDenyutJantungJanin');
+                localStorage.removeItem('dataTekananDarah');
+
+                window.location.href = 'index.html';
             })
         })
     </script>

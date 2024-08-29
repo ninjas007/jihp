@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 
-    <title>Education</title>
+    <title>Monitoring</title>
 
     <link href="css/mdb.min.css" rel="stylesheet" />
 
@@ -19,6 +19,11 @@
     <style>
         .body-wrap {
             height: initial;
+        }
+
+        .input-group .input-group-text,
+        .input-group>.form-control {
+            height: calc(2.5rem + 2px);
         }
     </style>
 </head>
@@ -34,10 +39,105 @@
                 </div>
                 <div class="body-content p-4" style="margin-top: 60px">
                     <div class="row">
-                        <div class="col-12 mb-4 text-center">
-                            <button type="button" id="simpan" class="btn btn-info btn-lg text-white fs14"
-                                style="border-radius: 20px;"> Simpan
-                            </button>
+                        <div class="col-12">
+                            <div class="card" style="background-color: #ffffffda;">
+                                <div class="card-header">
+                                    <h3 class="text-dark text-center">Monitoring</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <div id="umurKandunganCollapse" class="border p-2 rounded">
+                                                <h4 class="mb-3">Umur Kandungan</h4>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group mb-4">
+                                                            <label class="mb-2 fs14" for="hpht">HPHT (Hari Pertama Haid
+                                                                Terakhir)</label>
+                                                            <input type="date" class="fs14 form-control border"
+                                                                id="hpht">
+                                                        </div>
+                                                        <div class="form-group mb-4">
+                                                            <label class="mb-2 fs14" for="tanggalCekTerakhir">Tanggal
+                                                                Cek Terakhir</label>
+                                                            <input type="date" class="fs14 form-control border"
+                                                                id="tanggalCekTerakhir">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button class="btn btn-info"
+                                                            style="font-size: 12px;">Cek</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group d-none" id="hasilUmurKandungan">
+                                                    <div class="mb-3">Hasil Umur Kandungan </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <div id="tekananDarahCollapse" class="border p-2 rounded">
+                                                <h4 class="mb-3">Tekanan Darah</h4>
+                                                <div class="row mb-2">
+                                                    <div class="col-8">
+                                                        <div class="d-flex justify-content-center">
+                                                            <div>
+                                                                <input type="number" class="fs14 form-control border"
+                                                                    id="tekananDarah1" min="0">
+                                                            </div>
+                                                            <div class="fw-bold" style="font-size: 30px;">&nbsp;/&nbsp;
+                                                            </div>
+                                                            <div>
+                                                                <input type="number" class="fs14 form-control border"
+                                                                    id="tekananDarah2" min="0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <button type="button" class="btn btn-info"
+                                                            id="btnHasilTekananDarah"
+                                                            style="font-size: 12px;">Simpan</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 px-3">
+                                                        <div class="mb-3 fs14" id="hasilTekananDarah"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <div id="denyutJantungJaninCollapse" class="border p-2 rounded">
+                                                <h4 class="mb-3">Denyut Jantung Janin</h4>
+                                                <div class="row mb-2">
+                                                    <div class="col-8">
+                                                        <div class="input-group mb-3">
+                                                            <input type="number" class="form-control border"
+                                                                id="denyutJantungJanin" />
+                                                            <span class="input-group-text border">x/menit</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <button type="button" class="btn btn-info"
+                                                            id="btnHasilDenyutJantungJanin"
+                                                            style="font-size: 12px;">Simpan</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 px-3">
+                                                        <div class="mb-3 fs14" id="hasilDenyutJantungJanin"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -48,82 +148,80 @@
     <script src="js/mdb.min.js"></script>
     <script src="js/jquery-3.6.3.min.js"></script>
     <script src="js/fade.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
-            var belumAdaAnak = 0;
-            $('#no3belumanak').click(function () {
-                $("#no3").val('');
-                if ($(this).is(':checked')) {
-                    $("#no3").prop('disabled', true);
-                    belumAdaAnak = 1
+            $("#btnHasilTekananDarah").click(function () {
+                let tekananDarah1 = $("#tekananDarah1").val();
+
+                if (tekananDarah1 == '') {
+                    alert('Lengkapi data terlebih dahulu')
+                    return;
+                }
+
+
+                let hasilTekananDarah = '';
+                if (parseInt(tekananDarah1) < 140) {
+                    hasilTekananDarah = 'Normal';
+                } else if (parseInt(tekananDarah1) >= 140) {
+                    hasilTekananDarah = 'Hipertensi';
+                }
+
+                let tekananDarah = tekananDarah1 + '/' + $("#tekananDarah2").val();
+                let dataTekananDarah = localStorage.getItem('dataTekananDarah') || '[]';
+
+                if (dataTekananDarah && dataTekananDarah.length > 0) {
+                    // save to local storage
+                    dataTekananDarah = JSON.parse(dataTekananDarah);
+                    dataTekananDarah.push({
+                        tekananDarah: tekananDarah,
+                        hasilTekananDarah: hasilTekananDarah
+                    });
                 } else {
-                    $("#no3").prop('disabled', false);
-                    belumAdaAnak = 0
+                    dataTekananDarah = [{
+                        tekananDarah: tekananDarah,
+                        hasilTekananDarah: hasilTekananDarah
+                    }];
                 }
-            })
+                localStorage.setItem('dataTekananDarah', JSON.stringify(dataTekananDarah));
 
-            $("#simpan").click(function () {
+                $("#tekananDarah1").val('');
+                $("#tekananDarah2").val('');
+                $('#hasilTekananDarah').text(`${tekananDarah} ${hasilTekananDarah}`);
+            });
 
-                if ($("#no1").val() == '' || $("#no2").val() == '' || ($("#no3").val() == '' && belumAdaAnak == 0)) {
+            $("#btnHasilDenyutJantungJanin").click(function () {
+                let denyutJantungJanin = $("#denyutJantungJanin").val();
+                if (denyutJantungJanin == '') {
                     alert('Lengkapi data terlebih dahulu')
                     return;
                 }
 
-                if ($('#no4').val() == '' || $('#no5').val() == '' || $('#no6').val() == '') {
-                    alert('Lengkapi data terlebih dahulu')
-                    return;
+                let hasilDenyutJantungJanin = 'Gawat Janin';
+                if (parseInt(denyutJantungJanin) > 120 && parseInt(denyutJantungJanin) < 160) {
+                    hasilDenyutJantungJanin = 'Normal'
                 }
 
-                if ($('#no7').val() == '' || $('#no8').val() == '' || $('#no9').val() == '') {
-                    alert('Lengkapi data terlebih dahulu')
-                    return;
-                }
-
-                if ($('#no10').val() == '' || $('#no11').val() == '' || $('#no12').val() == '') {
-                    alert('Lengkapi data terlebih dahulu')
-                    return;
-                }
-
-                let data = {
-                    date: new Date().toLocaleString(),
-                    no1: $("#no1").val(),
-                    no2: $("#no2").val(),
-                    no3: $("#no3").val(),
-                    no4: $("#no4").val(),
-                    no5: $("#no5").val(),
-                    no6: $("#no6").val(),
-                    no7: $("#no7").val(),
-                    no8: $("#no8").val(),
-                    no9: $("#no9").val(),
-                    no10: $("#no10").val(),
-                    no11: $("#no11").val(),
-                    no12: $("#no12").val(),
-                    belumAdaAnak: belumAdaAnak
-                }
-
-                // cek data local storage screening
-                let screening = localStorage.getItem('screening')
-
-                if (screening) {
-
-                    // cek kalau 10 datanya maka hapus data yang pertama
-                    if (JSON.parse(screening).length == 5) {
-                        screening = JSON.parse(screening)
-                        screening.shift()
-                    }
-
-                    screening = JSON.parse(screening)
-                    screening.push(data)
+                let dataDenyutJantungJanin = localStorage.getItem('dataDenyutJantungJanin') || '[]';
+                if (dataDenyutJantungJanin && dataDenyutJantungJanin.length > 0) {
+                    // save to local storage
+                    dataDenyutJantungJanin = JSON.parse(dataDenyutJantungJanin);
+                    dataDenyutJantungJanin.push({
+                        denyutJantungJanin: denyutJantungJanin,
+                        hasilDenyutJantungJanin: hasilDenyutJantungJanin,
+                    });
                 } else {
-                    screening = [data];
+                    dataDenyutJantungJanin = [{
+                        denyutJantungJanin: denyutJantungJanin,
+                        hasilDenyutJantungJanin: hasilDenyutJantungJanin
+                    }];
                 }
 
-                localStorage.setItem('screening', JSON.stringify(screening))
+                localStorage.setItem('dataDenyutJantungJanin', JSON.stringify(dataDenyutJantungJanin));
 
-                let lengthScreenings = JSON.parse(localStorage.getItem('screening')).length;
-
-                window.location.href = 'screening-hasil-detail.html?id=' + (lengthScreenings - 1);
-            })
+                $("#denyutJantungJanin").val('');
+                $('#hasilDenyutJantungJanin').text(`${denyutJantungJanin} X/menit. ${hasilDenyutJantungJanin}`);
+            });
         })
     </script>
 </body>
