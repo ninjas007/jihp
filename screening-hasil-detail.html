@@ -17,6 +17,10 @@
 
     <link rel="stylesheet" href="css/menubar.css">
     <style>
+        .body-wrap {
+            height: 100vh;
+        }
+
         table tr td {
             padding: 5px 3px;
         }
@@ -69,8 +73,8 @@
                                     <td><span id="date" class="fs14"></span></td>
                                 </tr>
                             </table>
-                            <table id="riwayatScreening" style="margin-bottom: 70px">
-                                <tr>
+                            <table id="riwayatScreening">
+                                <tr class="fw-bold">
                                     <td width="5%">No</td>
                                     <td>Screening</td>
                                     <td>Hasil</td>
@@ -136,6 +140,7 @@
                                     <td id="no12"></td>
                                 </tr>
                             </table>
+                            <a href="screening-hasil.html" class="btn mt-2 btn-info text-white">Lihat Riwayat Lainnya</a>
                         </div>
                     </div>
                 </div>

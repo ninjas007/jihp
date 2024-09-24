@@ -37,7 +37,7 @@
                         <img src="images/left-arrow.png" onclick="window.location.href = 'menu.html';">&nbsp;&nbsp; Menu
                     </div>
                 </div>
-                <div class="body-content p-4" style="margin-top: 60px">
+                <div class="body-content p-4" style="margin-top: 50px">
                     <div class="row">
                         <div class="col-12">
                             <div class="card" style="background-color: #ffffffda;">
@@ -62,16 +62,13 @@
                                                                 Cek Terakhir</label>
                                                             <input type="date" class="fs14 form-control border"
                                                                 id="tanggalCekTerakhir">
+                                                            <div class="mt-3 fw-bold fs14" id="hasilUmurKandungan"></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
-                                                        <button class="btn btn-info"
-                                                            style="font-size: 12px;">Cek</button>
+                                                        <button class="btn btn-info" style="font-size: 12px;"
+                                                            id="btnHasilUmurKandungan">Cek</button>
                                                     </div>
-                                                </div>
-
-                                                <div class="form-group d-none" id="hasilUmurKandungan">
-                                                    <div class="mb-3">Hasil Umur Kandungan </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,7 +101,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 px-3">
-                                                        <div class="mb-3 fs14" id="hasilTekananDarah"></div>
+                                                        <div class="mb-3 fs14 fw-bold" id="hasilTekananDarah"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,12 +127,15 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 px-3">
-                                                        <div class="mb-3 fs14" id="hasilDenyutJantungJanin"></div>
+                                                        <div class="mb-3 fs14 fw-bold" id="hasilDenyutJantungJanin"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="monitoring-hasil.html" class="btn btn-info btn-block text-white">Lihat Riwayat</a>
                                 </div>
                             </div>
                         </div>
@@ -151,9 +151,61 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
+            var date = new Date().toLocaleString();
+
+            $('#btnHasilUmurKandungan').click(function () {
+                let hpht = $('#hpht').val();
+                let tanggalCekTerakhir = $('#tanggalCekTerakhir').val();
+
+                if (hpht == '' || tanggalCekTerakhir == '') {
+                    alert('Lengkapi data terlebih dahulu')
+                    return;
+                }
+
+                // get weeks and days range hpht and tanggakCekTerakhir
+                let hphtDate = new Date(hpht);
+                let cekTerakhirDate = new Date(tanggalCekTerakhir);
+                let weeks = Math.abs(hphtDate - cekTerakhirDate) / (1000 * 60 * 60 * 24 * 7);
+                let days = Math.abs(hphtDate - cekTerakhirDate) / (1000 * 60 * 60 * 24);
+
+                let hasilUmurKandungan = `${Math.floor(weeks)} Minggu ${Math.floor(days)} Hari`;
+
+                let dataUmurKandungan = localStorage.getItem('dataUmurKandungan') ||  null;
+
+                if (dataUmurKandungan && dataUmurKandungan != null) {
+
+                    // cek kalau 10 datanya maka hapus data yang pertama
+                    if (JSON.parse(dataUmurKandungan).length == 5) {
+                        dataUmurKandungan = JSON.parse(dataUmurKandungan)
+                        dataUmurKandungan.splice(0, 1);
+                    } else {
+                        dataUmurKandungan = JSON.parse(dataUmurKandungan)
+                    }
+
+                    dataUmurKandungan.push({
+                        date: date,
+                        hpht: hphtDate,
+                        tanggalCekTerakhir: cekTerakhirDate,
+                        hasilUmurKandungan: hasilUmurKandungan
+                    });
+                } else {
+                    dataUmurKandungan = [{
+                        date: date,
+                        hpht: hphtDate,
+                        tanggalCekTerakhir: cekTerakhirDate,
+                        hasilUmurKandungan: hasilUmurKandungan
+                    }];
+                }
+
+                localStorage.setItem('dataUmurKandungan', JSON.stringify(dataUmurKandungan));
+
+                $('#hpht').val('');
+                $('#tanggalCekTerakhir').val('');
+                $('#hasilUmurKandungan').html(hasilUmurKandungan);
+            })
+
             $("#btnHasilTekananDarah").click(function () {
                 let tekananDarah1 = $("#tekananDarah1").val();
-
                 if (tekananDarah1 == '') {
                     alert('Lengkapi data terlebih dahulu')
                     return;
@@ -168,17 +220,27 @@
                 }
 
                 let tekananDarah = tekananDarah1 + '/' + $("#tekananDarah2").val();
-                let dataTekananDarah = localStorage.getItem('dataTekananDarah') || '[]';
+                let dataTekananDarah = localStorage.getItem('dataTekananDarah') || null;
 
-                if (dataTekananDarah && dataTekananDarah.length > 0) {
+                if (dataTekananDarah && dataTekananDarah != null) {
+
+                    // cek kalau 10 datanya maka hapus data yang pertama
+                    if (JSON.parse(dataTekananDarah).length == 5) {
+                        dataTekananDarah = JSON.parse(dataTekananDarah)
+                        dataTekananDarah.shift()
+                    } else {
+                        dataTekananDarah = JSON.parse(dataTekananDarah)
+                    }
+
                     // save to local storage
-                    dataTekananDarah = JSON.parse(dataTekananDarah);
                     dataTekananDarah.push({
+                        date: date,
                         tekananDarah: tekananDarah,
                         hasilTekananDarah: hasilTekananDarah
                     });
                 } else {
                     dataTekananDarah = [{
+                        date: date,
                         tekananDarah: tekananDarah,
                         hasilTekananDarah: hasilTekananDarah
                     }];
@@ -202,16 +264,26 @@
                     hasilDenyutJantungJanin = 'Normal'
                 }
 
-                let dataDenyutJantungJanin = localStorage.getItem('dataDenyutJantungJanin') || '[]';
-                if (dataDenyutJantungJanin && dataDenyutJantungJanin.length > 0) {
+                let dataDenyutJantungJanin = localStorage.getItem('dataDenyutJantungJanin') || null;
+                if (dataDenyutJantungJanin && dataDenyutJantungJanin != null) {
+
+                    // cek kalau 10 datanya maka hapus data yang pertama
+                    if (JSON.parse(dataDenyutJantungJanin).length == 5) {
+                        dataDenyutJantungJanin = JSON.parse(dataDenyutJantungJanin)
+                        dataDenyutJantungJanin.shift()
+                    } else {
+                        dataDenyutJantungJanin = JSON.parse(dataDenyutJantungJanin)
+                    }
+
                     // save to local storage
-                    dataDenyutJantungJanin = JSON.parse(dataDenyutJantungJanin);
                     dataDenyutJantungJanin.push({
+                        date: date,
                         denyutJantungJanin: denyutJantungJanin,
                         hasilDenyutJantungJanin: hasilDenyutJantungJanin,
                     });
                 } else {
                     dataDenyutJantungJanin = [{
+                        date: date,
                         denyutJantungJanin: denyutJantungJanin,
                         hasilDenyutJantungJanin: hasilDenyutJantungJanin
                     }];

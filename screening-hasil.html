@@ -25,6 +25,21 @@
             border: .3px solid #a1a1a1;
             padding: 3px;
         }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link {
+            color: #000 !important;
+            font-weight: bold;
+
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+            background-color: #b7c913;
+            border: 1px solid #7f7f80;
+            border-radius: 5px;
+            color: #fff !important;
+        }
     </style>
 </head>
 
@@ -40,9 +55,19 @@
                 <div class="body-content p-4" style="margin-top: 60px">
                     <div class="row">
                         <div class="col-12 mb-4">
+                            <ul class="nav nav-tabs justify-content-center d-flex">
+                                <li class="nav-item" style="background-color: transparent;">
+                                    <a class="nav-link active" href="screening-hasil.html">Riwayat Screening</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="monitoring-hasil.html">Riwayat Monitoring</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 mb-4">
                             <table class="mb-4">
                                 <tr>
-                                    <td class="fs14 text-center fw-bold" colspan="3">Hasil Screening Kehamilan Berisiko
+                                    <td class="fs14 fw-bold" colspan="3">Hasil Screening Kehamilan Berisiko
                                     </td>
                                 </tr>
                                 <tr>
@@ -61,11 +86,23 @@
                             </table>
                             <table>
                                 <tr>
-                                    <td class="text-center fs14 fw-bold" colspan="3">Riwayat Monitoring</td>
+                                    <td class="fs14 fw-bold" colspan="3">Riwayat Screening</td>
                                 </tr>
                                 <tbody id="riwayatScreening">
-
+                                    <tr>
+                                        <td style="padding: 10px 4px; border: none">
+                                            Belum ada riwayat
+                                        </td>
+                                    </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" style="padding: 10px 0px">
+                                            <a href="screening.html" class="btn btn-info text-white">Tambah
+                                                Screening</a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -108,8 +145,6 @@
                 });
 
                 $('tbody#riwayatScreening').html(tr);
-            } else {
-                window.location.href = 'screening.html';
             }
         })
 

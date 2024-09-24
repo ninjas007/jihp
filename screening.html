@@ -182,17 +182,18 @@
                 }
 
                 // cek data local storage screening
-                let screening = localStorage.getItem('screening')
+                let screening = localStorage.getItem('screening') || null;
 
-                if (screening) {
+                if (screening && screening != null) {
 
                     // cek kalau 10 datanya maka hapus data yang pertama
                     if (JSON.parse(screening).length == 5) {
                         screening = JSON.parse(screening)
                         screening.shift()
+                    } else {
+                        screening = JSON.parse(screening)
                     }
 
-                    screening = JSON.parse(screening)
                     screening.push(data)
                 } else {
                     screening = [data];
